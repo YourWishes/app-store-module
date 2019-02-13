@@ -1,0 +1,41 @@
+{
+  "name": "@yourwishes/app-store-module",
+  "version": "0.0.1",
+  "description": "Server side implementation for the app-store module. ",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "tsc -p ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YourWishes/app-store-module.git"
+  },
+  "keywords": [
+    "store",
+    "app",
+    "state",
+    "reducer",
+    "redux",
+    "thunk",
+    "module",
+    "server",
+    "side"
+  ],
+  "author": "Dominic Masters <dominic@domsplace.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/YourWishes/app-store-module/issues"
+  },
+  "dependencies": {
+    "@yourwishes/app-base": "^1.2.0",
+    "@yourwishes/app-store": "0.0.3"
+  },
+  "devDependencies": {
+    "@types/jest": "^23.3.10",
+    "@types/node": "^10.12.12",
+    "jest": "^23.6.0",
+    "ts-jest": "^23.10.5",
+    "typescript": "^3.2.4"
+  }
+}
