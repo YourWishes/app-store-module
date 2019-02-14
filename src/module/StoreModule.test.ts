@@ -1,49 +1,7 @@
 import { StoreModule } from './';
 import { IStoreApp } from './../app/';
 import { App } from '@yourwishes/app-base';
-
-
-/*** Dummy Actions ***/
-const ADD = 'ADD';
-const SUB = 'SUB';
-const SET = 'SET';
-const DO_THING = 'DO_THING';
-
-type Add = { type: typeof ADD, amount:number };
-type Sub = { type: typeof SUB, amount:number };
-type Set = { type: typeof SET, value:number };
-type DoThing = { type: typeof DO_THING };
-
-type Actions = Add|Sub|Set|DoThing;
-
-export const add = (amount:number):Add => ({ type: ADD, amount });
-export const sub = (amount:number):Sub => ({ type: SUB, amount });
-export const set = (value:number):Set => ({ type: SET, value });
-export const doThing = ():DoThing => ({ type: DO_THING });
-
-/*** Dummy State ***/
-type CounterState = {
-  counter:number
-};
-
-const InitialState = { counter: 0 };
-
-/*** Dummy Reducer ***/
-const counterReducer = (state:CounterState = InitialState, action:Actions) => {
-  switch(action.type) {
-    case ADD:
-      return { ...state, counter: state.counter+action.amount };
-    case SUB:
-      return { ...state, counter: state.counter-action.amount };
-    case SET:
-      return { ...state, counter: action.value };
-    case DO_THING:
-      return { ...state, counter: state.counter * 2 };
-    default:
-      return state;
-  }
-};
-
+import { CounterState, Actions, counterReducer } from '@yourwishes/app-store';
 
 /*** Dummy App ***/
 class DummyApp extends App implements IStoreApp<CounterState, Actions> {

@@ -1,6 +1,6 @@
 {
   "name": "@yourwishes/app-store-module",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Server side implementation for the app-store module. ",
   "main": "dist/index.js",
   "scripts": {
@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@yourwishes/app-base": "^1.2.0",
-    "@yourwishes/app-store": "0.0.3"
+    "@yourwishes/app-store": "0.0.7"
   },
   "devDependencies": {
     "@types/jest": "^23.3.10",
