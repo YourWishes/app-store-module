@@ -22,38 +22,35 @@
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 import { IStoreApp } from './../app/';
-import { Action, Reducer, ReducersMapObject, combineReducers, Middleware } from 'redux';
+import { Action, Reducer, Middleware } from 'redux';
 import { Module } from '@yourwishes/app-base';
-import { AppStoreOwner, AppStore } from '@yourwishes/app-store';
+import { AppStoreOwner, AppStore, reduceReducers } from '@yourwishes/app-store';
 
 export type ReducerList<S,A extends Action> = {
   [key:string]:Reducer<S,A>
 };
 
 export class StoreModule<S,A extends Action> extends Module implements AppStoreOwner<S,A> {
-  reducers:ReducersMapObject<S,A>;
+  reducers:Reducer<S,A>[]=[];
   middlewares:Middleware<S,A>[]=[];
   store:AppStore<S,A>;
 
   constructor(app:IStoreApp<S,A>) {
     super(app);
-    this.reducers = {} as ReducersMapObject<S,A>;
   }
 
   getReducer():Reducer<S, A> {
-    return combineReducers({
-      ...this.reducers
-    });
+    return reduceReducers( ...this.reducers);
   }
 
   getMiddlewares() {
     return this.middlewares;
   }
 
-  addReducer(key:string, reducer:Reducer<S,A>) {
-    if(!key || !key.length) throw new Error("Key is invalid.");
+  addReducer(reducer:Reducer<S,A>) {
     if(!reducer) throw new Error("Reducer is invalid.");
-    this.reducers[key] = reducer;
+    if(this.reducers.indexOf(reducer) !== -1) return;
+    this.reducers.push(reducer);
   }
 
   addMiddleware(middleware:Middleware<S,A>) {

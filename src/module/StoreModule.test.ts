@@ -25,30 +25,33 @@ describe('StoreModule', () => {
 });
 
 describe('addReducer', () => {
-  it('should require a valid key', () => {
-    let module = new StoreModule(dummyApp);
-    expect(() => module.addReducer(null, counterReducer)).toThrow();
-    expect(() => module.addReducer('', counterReducer)).toThrow()
-  });
-
   it('should require a valid reducer', () => {
     let module = new StoreModule(dummyApp);
-    expect(() => module.addReducer('counter', null)).toThrow();
+    expect(() => module.addReducer(null)).toThrow();
   });
 
-  it('should set the reducer with the supplied key into the reducer list', () => {
+  it('should add the reducer into the reducer list', () => {
     let module = new StoreModule(dummyApp);
-    expect(module.reducers).not.toHaveProperty('counter');
-    expect(() => module.addReducer('counter', counterReducer)).not.toThrow();
-    expect(module.reducers).toHaveProperty('counter');
-    expect(module.reducers['counter']).toEqual(counterReducer);
+    expect(module.reducers).not.toContain(counterReducer);
+    expect(() => module.addReducer(counterReducer)).not.toThrow();
+    expect(module.reducers).toContain(counterReducer);
+    expect(module.reducers[0]).toEqual(counterReducer);
+  });
+
+  it('should not add the reducer to the list twice', () => {
+    let module = new StoreModule(dummyApp);
+    expect(module.reducers).toHaveLength(0);
+    expect(() => module.addReducer(counterReducer)).not.toThrow();
+    expect(module.reducers).toHaveLength(1);
+    expect(() => module.addReducer(counterReducer)).not.toThrow();
+    expect(module.reducers).toHaveLength(1);
   });
 });
 
 describe('init', () => {
   it('should create a store', async () => {
     let module = new StoreModule(dummyApp);
-    module.addReducer('counter', counterReducer);
+    module.addReducer(counterReducer);
 
     expect(module.store).toBeUndefined();
     await expect(module.init()).resolves.not.toThrow();
