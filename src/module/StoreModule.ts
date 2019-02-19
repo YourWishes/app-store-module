@@ -40,7 +40,7 @@ export class StoreModule<S,A extends Action> extends Module implements AppStoreO
     this.reducers = {} as ReducersMapObject<S,A>;
   }
 
-  getReducer(): import("redux").Reducer<S, A> {
+  getReducer():Reducer<S, A> {
     return combineReducers({
       ...this.reducers
     });
