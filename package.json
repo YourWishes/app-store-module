@@ -1,6 +1,6 @@
 {
   "name": "@yourwishes/app-store-module",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Server side implementation for the app-store module. ",
   "main": "dist/index.js",
   "scripts": {
