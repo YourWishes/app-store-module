@@ -1,6 +1,6 @@
 {
   "name": "@yourwishes/app-store-module",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Server side implementation for the app-store module. ",
   "main": "dist/index.js",
   "scripts": {
@@ -28,7 +28,7 @@
     "url": "https://github.com/YourWishes/app-store-module/issues"
   },
   "dependencies": {
-    "@yourwishes/app-base": "^1.2.0",
+    "@yourwishes/app-base": "^1.4.2",
     "@yourwishes/app-store": "^0.2.5"
   },
   "devDependencies": {

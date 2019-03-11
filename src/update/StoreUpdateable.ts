@@ -21,46 +21,18 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+import { ModuleUpdateable, NPMPackage } from '@yourwishes/app-base';
 import { IStoreApp } from './../app/';
-import { Action, Reducer, Middleware } from 'redux';
-import { Module } from '@yourwishes/app-base';
-import { AppStoreOwner, AppStore, reduceReducers } from '@yourwishes/app-store';
-import { StoreUpdateable } from './../update/';
 
-export type ReducerList<S,A extends Action> = {
-  [key:string]:Reducer<S,A>
-};
+export class StoreUpdateable extends ModuleUpdateable {
+  app:IStoreApp<any,any>;
 
-export class StoreModule<S,A extends Action> extends Module implements AppStoreOwner<S,A> {
-  reducers:Reducer<S,A>[]=[];
-  middlewares:Middleware<S,A>[]=[];
-  store:AppStore<S,A>;
-
-  constructor(app:IStoreApp<S,A>) {
-    super(app);
-
-    app.updateChecker.addUpdateable(new StoreUpdateable(app));
+  constructor(app:IStoreApp<any,any>) {
+    super();
+    this.app = app;
   }
 
-  getReducer():Reducer<S, A> {
-    return reduceReducers( ...this.reducers);
-  }
-
-  getMiddlewares() {
-    return this.middlewares;
-  }
-
-  addReducer(reducer:Reducer<S,A>) {
-    if(!reducer) throw new Error("Reducer is invalid.");
-    if(this.reducers.indexOf(reducer) !== -1) return;
-    this.reducers.push(reducer);
-  }
-
-  addMiddleware(middleware:Middleware<S,A>) {
-    this.middlewares.push(middleware);
-  }
-
-  async init():Promise<void> {
-    this.store = new AppStore(this);
+  getPackage():NPMPackage {
+    return require('./../../package.json');
   }
 }
