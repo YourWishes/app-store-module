@@ -21,26 +21,27 @@
 // OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 // WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
+import { Module, NPMPackage } from '@yourwishes/app-base';
+import { AppStoreOwner, AppStore, reduceReducers } from '@yourwishes/app-store';
+
 import { IStoreApp } from './../app/';
 import { Action, Reducer, Middleware } from 'redux';
-import { Module } from '@yourwishes/app-base';
-import { AppStoreOwner, AppStore, reduceReducers } from '@yourwishes/app-store';
-import { StoreUpdateable } from './../update/';
 
 export type ReducerList<S,A extends Action> = {
   [key:string]:Reducer<S,A>
 };
 
 export class StoreModule<S,A extends Action> extends Module implements AppStoreOwner<S,A> {
+  app:IStoreApp<S,A>;
   reducers:Reducer<S,A>[]=[];
   middlewares:Middleware<S,A>[]=[];
   store:AppStore<S,A>;
 
   constructor(app:IStoreApp<S,A>) {
     super(app);
-
-    app.updateChecker.addUpdateable(new StoreUpdateable(app));
   }
+
+  loadPackage():NPMPackage { return require('./../../package.json'); }
 
   getReducer():Reducer<S, A> {
     return reduceReducers( ...this.reducers);
@@ -63,4 +64,6 @@ export class StoreModule<S,A extends Action> extends Module implements AppStoreO
   async init():Promise<void> {
     this.store = new AppStore(this);
   }
+
+  async destroy():Promise<void> { }
 }

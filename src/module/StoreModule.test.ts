@@ -11,7 +11,7 @@ class DummyApp extends App implements IStoreApp<CounterState, Actions> {
     super();
 
     this.store = new StoreModule(this);
-    this.addModule(this.store);
+    this.modules.addModule(this.store);
   }
 }
 
@@ -21,6 +21,12 @@ describe('StoreModule', () => {
   it('should require a real app', () => {
     expect(() => new StoreModule(null)).toThrow();
     expect(() => new StoreModule(dummyApp)).not.toThrow();
+  });
+});
+
+describe('loadPackage', () => {
+  it('should load the package data', () => {
+    expect(new StoreModule(dummyApp).package).toHaveProperty('name', '@yourwishes/app-store-module');
   });
 });
 
